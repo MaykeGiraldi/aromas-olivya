@@ -161,6 +161,27 @@ body {
 
 
 
+/* =========================
+   DESKTOP — CENTRALIZAÇÃO REAL
+========================= */
+@media (min-width: 768px) {
+
+  .carousel-track img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6vh 8vw;
+    object-fit: contain;
+  }
+
+  .carousel-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+
 @media (max-width: 767px) {
 
   /* =========================
@@ -257,9 +278,3 @@ body {
   }
 
 }
-
-
-
-
-
-
