@@ -161,29 +161,11 @@ body {
 
 
 
-/* =========================
-   DESKTOP — CENTRALIZAÇÃO REAL
-========================= */
-@media (min-width: 768px) {
-
-  .carousel-track img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6vh 8vw;
-    object-fit: contain;
-  }
-
-  .carousel-arrow {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
 @media (max-width: 767px) {
 
-  /* HERO */
+  /* =========================
+     HERO
+  ========================== */
   .hero {
     min-height: 100svh;
     padding: 0 20px;
@@ -193,18 +175,24 @@ body {
     margin-left: 0;
   }
 
-  /* AROMAS – remove prisão do 100vh */
+  /* =========================
+     AROMAS
+  ========================== */
   .aroma {
     height: auto;
     min-height: 100svh;
   }
 
-  /* CARROSSEL – libera altura */
+  /* =========================
+     CARROSSEL
+  ========================== */
   .carousel {
+    position: relative;
     height: auto;
   }
 
   .carousel-viewport {
+    position: relative;
     height: auto;
   }
 
@@ -213,59 +201,65 @@ body {
   }
 
   .carousel-track img {
+    width: 100%;
     height: auto;
     max-height: 80svh;
     object-fit: cover;
   }
 
-  /* SETAS */
+  /* =========================
+     SETAS DO CARROSSEL
+  ========================== */
   .carousel-arrow {
-    display: none;
-  }
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.35);
 
 
-  /* estado padrão: visível */
-.reveal {
-  opacity: 1;
-  transform: none;
-}
-
-/* estado animado (ativado via JS) */
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-/* estado inicial da animação */
-.reveal.animate {
-  opacity: 0;
-  transform: translateY(24px);
-}
-
-
-}
-
-/* =========================
-   MOBILE — SETAS ATIVAS
-========================= */
-@media (max-width: 767px) {
-
-  .carousel-arrow {
     display: flex;
+    align-items: center;
+    justify-content: center;
+
     width: 44px;
     height: 44px;
+    border-radius: 50%;
+
     font-size: 1.4rem;
+    line-height: 1;
+
     opacity: 0.9;
+    z-index: 10;
+    cursor: pointer;
   }
 
   .carousel-arrow.prev {
-    left: 16px;
+    left: 12px;
   }
 
   .carousel-arrow.next {
-    right: 16px;
+    right: 12px;
   }
+
+  /* =========================
+     CONTEÚDO INTERNO DA SETA
+     (se usar < >, span, i, svg)
+  ========================== */
+  .carousel-arrow span,
+  .carousel-arrow i,
+  .carousel-arrow svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    width: 100%;
+    height: 100%;
+  }
+
 }
+
+
+
+
 
 
