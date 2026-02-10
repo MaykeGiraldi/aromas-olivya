@@ -1,62 +1,63 @@
-const carousels = document.querySelectorAll("[data-carousel]");
-
-carousels.forEach((carousel) => {
+document.querySelectorAll("[data-carousel]").forEach((carousel) => {
   const track = carousel.querySelector(".carousel-track");
   const slides = Array.from(track.children);
-  const prevButton = carousel.querySelector(".prev");
-  const nextButton = carousel.querySelector(".next");
+  const prevBtn = carousel.querySelector(".carousel-arrow.prev");
+  const nextBtn = carousel.querySelector(".carousel-arrow.next");
+
   let index = 0;
   let startX = 0;
   let currentX = 0;
   let isDragging = false;
 
-  const updatePosition = () => {
-    track.style.transform = `translateX(-${index * 100}%)`;
+  const update = () => {
+    const width = carousel.querySelector(".carousel-viewport").offsetWidth;
+    track.style.transform = `translateX(-${index * width}px)`;
   };
 
-  const goToSlide = (direction) => {
-    index = (index + direction + slides.length) % slides.length;
-    updatePosition();
-  };
-
-  prevButton.addEventListener("click", () => goToSlide(-1));
-  nextButton.addEventListener("click", () => goToSlide(1));
-
-  const handleStart = (event) => {
-    isDragging = true;
-    startX = event.type.startsWith("touch")
-      ? event.touches[0].clientX
-      : event.clientX;
-    currentX = startX;
-  };
-
-  const handleMove = (event) => {
-    if (!isDragging) return;
-    currentX = event.type.startsWith("touch")
-      ? event.touches[0].clientX
-      : event.clientX;
-  };
-
-  const handleEnd = () => {
-    if (!isDragging) return;
-    const delta = currentX - startX;
-    if (Math.abs(delta) > 50) {
-      goToSlide(delta > 0 ? -1 : 1);
+  nextBtn?.addEventListener("click", () => {
+    if (index < slides.length - 1) {
+      index++;
+      update();
     }
+  });
+
+  prevBtn?.addEventListener("click", () => {
+    if (index > 0) {
+      index--;
+      update();
+    }
+  });
+
+  /* ===== TOUCH (MOBILE) ===== */
+
+  track.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+  });
+
+  track.addEventListener("touchmove", (e) => {
+    if (!isDragging) return;
+    currentX = e.touches[0].clientX;
+  });
+
+  track.addEventListener("touchend", () => {
+    if (!isDragging) return;
+
+    const diff = startX - currentX;
+
+    if (diff > 50 && index < slides.length - 1) {
+      index++;
+    } else if (diff < -50 && index > 0) {
+      index--;
+    }
+
+    update();
     isDragging = false;
-  };
+  });
 
-  track.addEventListener("touchstart", handleStart, { passive: true });
-  track.addEventListener("touchmove", handleMove, { passive: true });
-  track.addEventListener("touchend", handleEnd);
-
-  track.addEventListener("mousedown", handleStart);
-  track.addEventListener("mousemove", handleMove);
-  track.addEventListener("mouseup", handleEnd);
-  track.addEventListener("mouseleave", handleEnd);
-
-  updatePosition();
+  window.addEventListener("resize", update);
 });
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
