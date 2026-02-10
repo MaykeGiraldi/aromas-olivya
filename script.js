@@ -27,34 +27,6 @@ document.querySelectorAll("[data-carousel]").forEach((carousel) => {
       update();
     }
   });
-
-  /* ===== TOUCH (MOBILE) ===== */
-
-  track.addEventListener("touchstart", (e) => {
-    startX = e.touches[0].clientX;
-    isDragging = true;
-  });
-
-  track.addEventListener("touchmove", (e) => {
-    if (!isDragging) return;
-    currentX = e.touches[0].clientX;
-  });
-
-  track.addEventListener("touchend", () => {
-    if (!isDragging) return;
-
-    const diff = startX - currentX;
-
-    if (diff > 50 && index < slides.length - 1) {
-      index++;
-    } else if (diff < -50 && index > 0) {
-      index--;
-    }
-
-    update();
-    isDragging = false;
-  });
-
   window.addEventListener("resize", update);
 });
 
