@@ -29,6 +29,23 @@ document.querySelectorAll("[data-carousel]").forEach((carousel) => {
   });
   window.addEventListener("resize", update);
 });
+/* REVEAL DA LOGO (ISOLADO) */
+const logo = document.querySelector('.reveal-logo');
+
+if (logo) {
+  const logoObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        logo.classList.add('active');
+        logoObserver.unobserve(entry.target);
+      }
+    },
+    { threshold: 0.1 }
+  );
+
+  logoObserver.observe(logo);
+}
+
 
 
 
